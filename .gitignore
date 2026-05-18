@@ -220,3 +220,6 @@ __marimo__/
 .streamlit/secrets.toml
 
 ANSWERS.md
+
+# Lab runtime data
+delta-lake/raw/*.parquet

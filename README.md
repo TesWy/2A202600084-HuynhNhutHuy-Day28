@@ -31,10 +31,16 @@ Kaggle (GPU T4/P100):
 
 ## Quick Start
 
+> Local note: this repo supports `API_PORT` and `REDIS_PORT` in `.env`.
+> Defaults in `.env.example` follow the lab (`8000`, `6379`). On this machine,
+> `.env` uses `API_PORT=8010` and `REDIS_PORT=6380` because ports `8000` and
+> `6379` are already occupied by another local service.
+
 ### 1. Khởi động Local Stack
 
 ```bash
-cd lab28
+cd 2A202600084-HuynhNhutHuy-Day28
+cp .env.example .env  # Windows PowerShell: Copy-Item .env.example .env
 docker compose up -d
 docker compose ps  # Kiểm tra tất cả services Up
 ```
@@ -44,7 +50,11 @@ docker compose ps  # Kiểm tra tất cả services Up
 - Grafana: http://localhost:3000 (admin/admin)
 - Qdrant: http://localhost:6333/dashboard
 - Prometheus: http://localhost:9090
-- API Gateway: http://localhost:8000
+- API Gateway: http://localhost:${API_PORT:-8000}
+
+Nếu chưa có Kaggle/vLLM URL, API Gateway vẫn trả lời bằng local fallback để demo
+graceful degradation. Khi có Kaggle URL, điền `VLLM_NGROK_URL` và
+`EMBED_NGROK_URL` vào `.env`, rồi chạy lại `docker compose up -d --build`.
 
 ### 2. Setup Kaggle GPU
 

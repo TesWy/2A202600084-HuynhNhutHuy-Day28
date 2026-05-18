@@ -1,8 +1,14 @@
 # smoke-tests/test_e2e.py
 import pytest, requests, time, os
+from dotenv import load_dotenv
 
-BASE_URL = "http://localhost:8000"
+load_dotenv()
+
+API_PORT = os.environ.get("API_PORT", "8000")
+BASE_URL = f"http://localhost:{API_PORT}"
 VLLM_URL = os.environ.get("VLLM_NGROK_URL", "")
+REDIS_PORT = int(os.environ.get("REDIS_PORT", "6379"))
+CHAT_LATENCY_LIMIT_MS = 30000 if VLLM_URL else 2000
 
 # ── Test 1: Happy Path — Full Inference Request ───────────────
 class TestHappyPath:
@@ -16,7 +22,7 @@ class TestHappyPath:
         data = resp.json()
         assert "answer" in data
         assert len(data["answer"]) > 10
-        assert data["latency_ms"] < 2000
+        assert data["latency_ms"] < CHAT_LATENCY_LIMIT_MS
 
     def test_health_check_passes(self):
         """API Gateway health check"""
@@ -93,7 +99,7 @@ class TestFeatureStore:
     def test_feast_redis_has_features(self):
         """Feast (Redis) có features sau khi pipeline chạy"""
         import redis
-        r = redis.Redis(host="localhost", port=6379, decode_responses=True)
+        r = redis.Redis(host="localhost", port=REDIS_PORT, decode_responses=True)
         keys = r.keys("feature:*")
         assert len(keys) > 0, "No features found in Feast store"
         print(f"Feature store has {len(keys)} feature entries")

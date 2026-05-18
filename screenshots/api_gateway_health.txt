@@ -1,0 +1,5 @@
+﻿{
+    "status":  "ok",
+    "mode":  "vllm",
+    "qdrant_url":  "http://qdrant:6333"
+}

@@ -1,0 +1,28 @@
+﻿<!doctype html><html><head><meta charset='utf-8'><title>production readiness</title><style>body{font-family:Consolas,monospace;background:#0f172a;color:#e5e7eb;margin:0;padding:24px}h1{font:600 20px Segoe UI,sans-serif;margin:0 0 16px}pre{white-space:pre-wrap;line-height:1.45;background:#111827;border:1px solid #334155;border-radius:8px;padding:18px}</style></head><body><h1>production readiness</h1><pre>
+=== RELIABILITY ===
+  [PASS] Health check endpoint
+  [PASS] API Gateway responds
+
+=== OBSERVABILITY ===
+  [PASS] Prometheus up
+  [PASS] Grafana up
+  [PASS] Metrics endpoint exposed
+
+=== SECURITY ===
+  [PASS] Unauthorized request rejected
+
+=== VECTOR STORE ===
+  [PASS] Qdrant healthy
+  [PASS] Collection exists with vectors
+
+=== FEATURE STORE ===
+  [PASS] Redis reachable
+  [PASS] Feature records exist
+
+=== KAFKA ===
+  [PASS] Kafka topics exist
+
+========================================
+Production Readiness Score: 11/11 = 100%
+Target: &gt;80% - Status: READY
+</pre></body></html>
